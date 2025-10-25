@@ -21,9 +21,13 @@ Ao todo foram realizados 08 (oito) práticas, conforme apresentado na Tabela a s
 
 | Prática | Descrição | Link |
 | --- | --- | --- |
-| 01| Primeiro trabalho da disciplina: Apresentação do seminário| [Link para acesso](https://github.com/AlanMarquesRocha/ppgeec_inteligencia_computacional_aplicada/tree/master/t00_ica_semin%C3%A1rio)
-| 02 | Implementação de RNA-MLP e RBF para Análise de Sucesso Acadêmico| [Link para acesso](https://github.com/AlanMarquesRocha/ppgeec_inteligencia_computacional_aplicada/tree/master/t01_ica_rna_mlp_rbf)
-| 03 | Rede Neural Convolucional para Classificação de Imagens | [Link para acesso](https://github.com/AlanMarquesRocha/ppgeec_inteligencia_computacional_aplicada/tree/master/t02_ica_cnn)
-| 04 | Classificação de Defeitos em Células de Módulos Fotovoltaicos | [Link para acesso](https://github.com/AlanMarquesRocha/ppgeec_inteligencia_computacional_aplicada/tree/master/t03_ica_final_project)
+| 01 | Familiarização e E/S | [Link para acesso](https://github.com/AlanMarquesRocha/ppgeec_inteligencia_computacional_aplicada/tree/master/t00_ica_semin%C3%A1rio)
+| 02 | Incremento e Decremento| [Link para acesso](https://github.com/AlanMarquesRocha/ppgeec_inteligencia_computacional_aplicada/tree/master/t01_ica_rna_mlp_rbf)
+| 03 | Cronômetro com Interrupção Externa | [Link para acesso](https://github.com/AlanMarquesRocha/ppgeec_inteligencia_computacional_aplicada/tree/master/t02_ica_cnn)
+| 04 | Controle de Ventoinha | [Link para acesso](https://github.com/AlanMarquesRocha/ppgeec_inteligencia_computacional_aplicada/tree/master/t03_ica_final_project)
+| 05 | Display LCD 16x2 | [Link para acesso](https://github.com/AlanMarquesRocha/ppgeec_inteligencia_computacional_aplicada/tree/master/t00_ica_semin%C3%A1rio)
+| 06 | Voltímetro | [Link para acesso](https://github.com/AlanMarquesRocha/ppgeec_inteligencia_computacional_aplicada/tree/master/t01_ica_rna_mlp_rbf)
+| 07 | DAC ou rede R-2R | [Link para acesso](https://github.com/AlanMarquesRocha/ppgeec_inteligencia_computacional_aplicada/tree/master/t02_ica_cnn)
+| 08 | Comunicação Serial Síncrona | [Link para acesso](https://github.com/AlanMarquesRocha/ppgeec_inteligencia_computacional_aplicada/tree/master/t03_ica_final_project)
 
 <br>
