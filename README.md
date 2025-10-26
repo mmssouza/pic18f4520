@@ -19,7 +19,7 @@ Neste repositório, encontram-se os roteiros das práticas, códigos e materiais
 
 Ao todo foram realizados 08 (oito) práticas, conforme apresentado na Tabela a seguir:
 
-| Prática | Descrição | Link |
+| Nº da Prática | Descrição | Link |
 | --- | --- | --- |
 | 01 | Familiarização e E/S | [Link para acesso](https://github.com/AlanMarquesRocha/microprocessadores_2025_2/tree/master/Pr%C3%A1ticas/Pr%C3%A1tica%2001)
 | 02 | Incremento e Decremento| [Link para acesso](-)
