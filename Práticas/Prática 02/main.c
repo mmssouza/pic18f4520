@@ -1,251 +1,205 @@
-; =====================================================================
-; "MICROS" na linha 1 e "PROF: ALAN" na linha 2
-; PIC18F4520 + LCD 16x2 (8 bits)
-; =====================================================================
+// ======================================================================
+// "MICROS" na linha 1 e "PROF: ALAN" na linha 2
+// PIC18F4520 + LCD 16x2 (8 bits, barramento inteiro em PORTD)
+// RS = RB0, EN = RB1, RW = GND
+// Cristal externo ~4 MHz (OSC = XT)
+// ======================================================================
 
-            LIST      P=18F4520, F=INHX32
-            INCLUDE   "p18f4520.inc"
-	  
-; =====================================================================
-; CONEXÕES (MONTAGEM FÍSICA)
-; =====================================================================
-; LCD pino  1 (VSS) -> GND
-; LCD pino  2 (VDD) -> +5 V
-; LCD pino  3 (VEE) -> cursor do potenciômetro de ~10k (outros lados em 5 V e GND)
-; LCD pino  4 (RS)  -> RB0 do PIC (pino físico 33)
-; LCD pino  5 (RW)  -> GND
-; LCD pino  6 (E)   -> RB1 do PIC (pino físico 34)
-; LCD pino  7 (D0)  -> RD0 do PIC
-; LCD pino  8 (D1)  -> RD1 do PIC
-; LCD pino  9 (D2)  -> RD2 do PIC
-; LCD pino 10 (D3)  -> RD3 do PIC
-; LCD pino 11 (D4)  -> RD4 do PIC
-; LCD pino 12 (D5)  -> RD5 do PIC
-; LCD pino 13 (D6)  -> RD6 do PIC
-; LCD pino 14 (D7)  -> RD7 do PIC
-;
-; Cristal ~4 MHz entre OSC1 e OSC2, com capacitores de ~22pF pra GND.
-; MCLR (pino 1 do PIC) puxado para +5 V via resistor de 10k.
-;
-; IMPORTANTE: O código assume:
-;   RS = RB0
-;   EN = RB1
-;   RW = GND (escrita apenas)
-;   D0..D7 = RD0..RD7
-; =====================================================================
+#include <xc.h>
 
-; ---------------------------------------------------------------------
-; CONFIG BITS
-; ---------------------------------------------------------------------
-    CONFIG  OSC = XT          ; Oscilador externo tipo XT (cristal ~4 MHz)
-    CONFIG  FCMEN = OFF       ; Fail-Safe Clock Monitor desabilitado
-    CONFIG  IESO = OFF        ; Sem troca INT/EXT automática
+// ----------------------------------------------------------------------
+// CONFIG BITS (equivalentes aos do Assembly)
+// Ajuste se necessário para seu compilador/versão do XC8
+// ----------------------------------------------------------------------
+#pragma config OSC = XT        // Oscilador externo XT (~4 MHz)
+#pragma config FCMEN = OFF     // Fail-Safe Clock Monitor off
+#pragma config IESO = OFF      // Sem troca INT/EXT automática
 
-    CONFIG  PWRT = OFF        ; Power-up Timer OFF
-    CONFIG  BOREN = SBORDIS   ; Brown-out Reset hardware only
-    CONFIG  BORV = 3          ; Nível de Brown-out
+#pragma config PWRT = OFF      // Power-up Timer off
+#pragma config BOREN = SBORDIS // Brown-out Reset hardware only
+#pragma config BORV = 3        // Nível de Brown-out
 
-    CONFIG  WDT = OFF         ; Watchdog Timer OFF
-    CONFIG  WDTPS = 32768     ; Pós-escalonador do WDT (irrelevante com WDT OFF)
+#pragma config WDT = OFF       // Watchdog Timer off
+#pragma config WDTPS = 32768   // Pós-escalonador do WDT (irrelevante com WDT off)
 
-    CONFIG  CCP2MX = PORTC    ; CCP2 em RC1
-    CONFIG  PBADEN = OFF      ; PORTB<4:0> digitais após reset
-    CONFIG  LPT1OSC = OFF
-    CONFIG  MCLRE = ON        ; /MCLR habilitado (reset externo ativo em RE3/MCLR)
+#pragma config CCP2MX = PORTC  // CCP2 em RC1
+#pragma config PBADEN = OFF    // PORTB<4:0> como digital após reset
+#pragma config LPT1OSC = OFF
+#pragma config MCLRE = ON      // /MCLR habilitado (reset externo ativo em RE3/MCLR)
 
-    CONFIG  STVREN = ON       ; Reset em stack overflow/underflow
-    CONFIG  LVP = OFF         ; Desativa programação em baixa tensão (libera RB5)
-    CONFIG  XINST = OFF       ; Conjunto estendido de instruções OFF
-    CONFIG  DEBUG = OFF       ; Debug OFF
+#pragma config STVREN = ON     // Reset em stack overflow/underflow
+#pragma config LVP = OFF       // Desativa programação em baixa tensão (libera RB5)
+#pragma config XINST = OFF     // Modo estendido off
+#pragma config DEBUG = OFF     // Debugger off
 
-; ---------------------------------------------------------------------
-; DEFINIÇÕES DE PINOS DO LCD
-; ---------------------------------------------------------------------
-LCD_RS      EQU     0         ; RB0 -> RS
-LCD_EN      EQU     1         ; RB1 -> EN
+// ----------------------------------------------------------------------
+// Frequência de clock para as rotinas de atraso (__delay_ms/__delay_us)
+// O cristal externo é ~4 MHz (XT).
+// ----------------------------------------------------------------------
+#define _XTAL_FREQ 4000000UL
 
-; ---------------------------------------------------------------------
-; VARIÁVEIS
-; ---------------------------------------------------------------------
-            CBLOCK  0x20
-d0          ; contador de delay grosso
-d1          ; contador interno de delay
-            ENDC
+// ----------------------------------------------------------------------
+// Mapeamento de pinos LCD no hardware:
+//
+// LCD_RS -> RB0
+// LCD_EN -> RB1
+// LCD_RW -> GND (fixo no hardware, não controlamos por software)
+// LCD_D0..D7 -> RD0..RD7
+//
+// Importante: PORTD e PORTB serão saídas.
+// ----------------------------------------------------------------------
+#define LCD_RS_LAT LATBbits.LATB0
+#define LCD_EN_LAT LATBbits.LATB1
 
-; ---------------------------------------------------------------------
-; VETOR DE RESET
-; ---------------------------------------------------------------------
-            ORG     0x0000
-            GOTO    START
+// Escrevemos diretamente em LATD para mandar comandos/dados (8 bits)
+#define LCD_DATA_LAT LATD
 
-; ---------------------------------------------------------------------
-; DELAYS
-; ---------------------------------------------------------------------
+// ----------------------------------------------------------------------
+// Protótipos das funções de controle do LCD
+// ----------------------------------------------------------------------
+void lcd_pulseEnable(void);
+void lcd_command(unsigned char cmd);
+void lcd_data(unsigned char c);
+void lcd_init(void);
+void lcd_setLine1(void);
+void lcd_setLine2(void);
+void lcd_print(const char *msg);
 
-; Delay curto (~centenas de microssegundos @4MHz, aproximado)
-DelayShort:
-            MOVLW   0xFF
-            MOVWF   d1, ACCESS
-DelayShortLoop:
-            DECFSZ  d1, F, ACCESS
-            BRA     DelayShortLoop
-            RETURN
+// ----------------------------------------------------------------------
+// Função: lcd_pulseEnable
+// Dá um pulso no pino EN do LCD. O LCD lê no flanco de descida.
+// ----------------------------------------------------------------------
+void lcd_pulseEnable(void) {
+    LCD_EN_LAT = 1;        // EN = 1
+    __delay_us(50);        // pequeno atraso de setup
+    LCD_EN_LAT = 0;        // EN = 0
+    __delay_us(50);        // pequeno atraso de hold
+}
 
-; Delay longo (~alguns ms) chamando vários DelayShort
-DelayLong:
-            MOVLW   0x04
-            MOVWF   d0, ACCESS
-DelayLongLoop:
-            CALL    DelayShort
-            DECFSZ  d0, F, ACCESS
-            BRA     DelayLongLoop
-            RETURN
+// ----------------------------------------------------------------------
+// Função: lcd_command
+// Envia um comando para o LCD.
+// cmd é colocado no barramento D0..D7 -> PORTD
+// RS = 0 (comando), RW = GND (fixo), pulso em EN
+// Alguns comandos (ex: 0x01 clear display) exigem atraso maior.
+// ----------------------------------------------------------------------
+void lcd_command(unsigned char cmd) {
+    LCD_RS_LAT = 0;        // RS = 0 -> comando
+    LCD_DATA_LAT = cmd;    // coloca comando no barramento
+    lcd_pulseEnable();     // pulso no EN
 
-; ---------------------------------------------------------------------
-; ROTINAS DE LCD
-; ---------------------------------------------------------------------
+    // Espera pro LCD processar
+    // Clear display (0x01) e Return Home (0x02) demoram mais (~1-2ms+)
+    if(cmd == 0x01 || cmd == 0x02) {
+        __delay_ms(2);
+    } else {
+        __delay_us(100);
+    }
+}
 
-; Gera pulso no pino EN do LCD.
-; Pré-condição: LATD já tem o byte e RS já está ajustado em LATB.
-LCD_PulseEN:
-            BSF     LATB, LCD_EN, ACCESS   ; EN = 1
-            CALL    DelayShort
-            BCF     LATB, LCD_EN, ACCESS   ; EN = 0
-            CALL    DelayShort
-            RETURN
+// ----------------------------------------------------------------------
+// Função: lcd_data
+// Envia um caractere ASCII para o LCD.
+// RS = 1 (dado de texto), RW = GND fixo, pulso em EN
+// ----------------------------------------------------------------------
+void lcd_data(unsigned char c) {
+    LCD_RS_LAT = 1;       // RS = 1 -> dado
+    LCD_DATA_LAT = c;     // coloca caractere no barramento
+    lcd_pulseEnable();    // pulso em EN
+    __delay_us(100);      // pequeno atraso entre caracteres
+}
 
-; Envia comando (RS=0). WREG contém o comando (ex: 0x01 = clear).
-LCD_Command:
-            MOVWF   LATD, ACCESS           ; LATD <- comando
-            BCF     LATB, LCD_RS, ACCESS   ; RS = 0 (comando)
-            CALL    LCD_PulseEN
-            CALL    DelayLong              ; tempo pro LCD executar
-            RETURN
+// ----------------------------------------------------------------------
+// Função: lcd_init
+// Sequência clássica para LCD 16x2 HD44780 em modo 8 bits.
+//
+// 0x38 -> interface 8 bits, 2 linhas, fonte 5x8
+// 0x0C -> display ON, cursor OFF, blink OFF
+// 0x01 -> clear display
+// 0x06 -> entry mode: cursor avança, sem shift de tela
+// ----------------------------------------------------------------------
+void lcd_init(void) {
+    __delay_ms(20);   // atraso inicial após energizar o LCD
+    __delay_ms(20);
 
-; Envia dado (caractere ASCII) (RS=1). WREG contém o caractere.
-LCD_Data:
-            MOVWF   LATD, ACCESS           ; LATD <- caractere ASCII
-            BSF     LATB, LCD_RS, ACCESS   ; RS = 1 (dado)
-            CALL    LCD_PulseEN
-            CALL    DelayShort
-            RETURN
+    lcd_command(0x38); // Function Set: 8 bits, 2 linhas
+    lcd_command(0x0C); // Display ON, cursor OFF, blink OFF
+    lcd_command(0x01); // Clear display
+    lcd_command(0x06); // Entry mode (cursor++)
 
-; Inicialização padrão HD44780 em 8 bits.
-; 0x38: interface 8 bits, 2 linhas, fonte 5x8
-; 0x0C: display ON, cursor OFF, blink OFF
-; 0x01: clear display
-; 0x06: entry mode, cursor avança
-LCD_Init:
-            CALL    DelayLong
-            CALL    DelayLong          ; atraso inicial pós-power-up
+    // Agora o LCD está pronto
+}
 
-            MOVLW   0x38               ; Function Set
-            CALL    LCD_Command
+// ----------------------------------------------------------------------
+// Posição do cursor na linha 1 (endereço DDRAM 0x00 -> comando 0x80)
+// ----------------------------------------------------------------------
+void lcd_setLine1(void) {
+    lcd_command(0x80); // forçar cursor coluna 0 linha 1
+}
 
-            MOVLW   0x0C               ; Display ON, cursor OFF, blink OFF
-            CALL    LCD_Command
+// ----------------------------------------------------------------------
+// Posição do cursor na linha 2 (endereço DDRAM 0x40 -> comando 0xC0)
+// ----------------------------------------------------------------------
+void lcd_setLine2(void) {
+    lcd_command(0xC0); // forçar cursor coluna 0 linha 2
+}
 
-            MOVLW   0x01               ; Clear display
-            CALL    LCD_Command
+// ----------------------------------------------------------------------
+// Função: lcd_print
+// Envia uma string terminada em '\0' para o LCD.
+// Cada caractere é mandado via lcd_data().
+// ----------------------------------------------------------------------
+void lcd_print(const char *msg) {
+    while(*msg != '\0') {
+        lcd_data(*msg);
+        msg++;
+    }
+}
 
-            MOVLW   0x06               ; Entry mode: cursor incrementa
-            CALL    LCD_Command
+// ----------------------------------------------------------------------
+// Função principal (equivalente ao START em Assembly)
+//
+// Fluxo:
+// 1. Desabilita interrupções globais
+// 2. Configura portas digitais e direções
+// 3. Inicializa o LCD
+// 4. Escreve "MICROS" na linha 1
+// 5. Escreve "PROF: ALAN" na linha 2
+// 6. Loop infinito
+// ----------------------------------------------------------------------
+void main(void) {
 
-            RETURN
+    // Desabilitar interrupções globais durante init
+    INTCON = 0x00;
 
-; Cursor no início da linha 1.
-; Linha 1 = DDRAM addr 0x00 -> comando 0x80
-LCD_SetLine1:
-            MOVLW   0x80
-            CALL    LCD_Command
-            RETURN
+    // Configurar canais analógicos como digitais.
+    // ADCON1 = 0x0F força PORTA/PORTB como digital (desliga entradas analógicas).
+    ADCON1 = 0x0F;
 
-; Cursor no início da linha 2.
-; Linha 2 = DDRAM addr 0x40 -> comando 0xC0
-LCD_SetLine2:
-            MOVLW   0xC0
-            CALL    LCD_Command
-            RETURN
+    // Zerar latches antes de configurar TRIS
+    LATB = 0x00;
+    LATD = 0x00;
 
-; Imprime string ROM terminada em 0x00.
-; Supõe TBLPTR apontando para o 1º caractere da string.
-LCD_PrintString:
-NextChar:
-            TBLRD*+                     ; TABLAT <- [TBLPTR], TBLPTR++
-            MOVF    TABLAT, W, ACCESS   ; W = caractere lido
-            BNZ     SendChar            ; se W != 0x00, imprime
-            RETURN                      ; se W == 0x00, acabou a string
+    // PORTB como saída (RB0 = RS, RB1 = EN)
+    TRISB = 0x00;  // 0 = saída em todos os bits de B
 
-SendChar:
-            CALL    LCD_Data            ; manda caractere em W
-            BRA     NextChar
+    // PORTD como saída (D0..D7 do LCD)
+    TRISD = 0x00;  // 0 = saída em todos os bits de D
 
-; ---------------------------------------------------------------------
-; PROGRAMA PRINCIPAL
-; ---------------------------------------------------------------------
-START:
-            ; Desativa interrupções globais
-            CLRF    INTCON, ACCESS
+    // Inicializar LCD
+    lcd_init();
 
-            ; Força PORTA/PORTB digitais
-            MOVLW   0x0F
-            MOVWF   ADCON1, ACCESS
+    // Linha 1: "MICROS"
+    lcd_setLine1();
+    lcd_print("MICROS");
 
-            ; Zera as saídas antes de configurar TRIS
-            CLRF    LATB, ACCESS
-            CLRF    LATD, ACCESS
+    // Linha 2: "PROF: ALAN"
+    lcd_setLine2();
+    lcd_print("PROF: ALAN");
 
-            ; PORTB como saída (RB0=RS, RB1=EN, etc.)
-            MOVLW   0x00
-            MOVWF   TRISB, ACCESS       ; RB7..RB0 = 0 -> saída
-
-            ; PORTD como saída (D0..D7 do LCD)
-            MOVLW   0x00
-            MOVWF   TRISD, ACCESS       ; RD7..RD0 = 0 -> saída
-
-            ; Inicializa LCD
-            CALL    LCD_Init
-
-            ; ===== Linha 1: "MICROS" =====
-            CALL    LCD_SetLine1
-
-            ; Carrega TBLPTR para MsgLinha1
-            MOVLW   HIGH(MsgLinha1)
-            MOVWF   TBLPTRH, ACCESS
-            MOVLW   UPPER(MsgLinha1)
-            MOVWF   TBLPTRU, ACCESS
-            MOVLW   LOW(MsgLinha1)
-            MOVWF   TBLPTRL, ACCESS
-
-            CALL    LCD_PrintString
-
-            ; ===== Linha 2: "PROF: ALAN" =====
-            CALL    LCD_SetLine2
-
-            ; Carrega TBLPTR para MsgLinha2
-            MOVLW   HIGH(MsgLinha2)
-            MOVWF   TBLPTRH, ACCESS
-            MOVLW   UPPER(MsgLinha2)
-            MOVWF   TBLPTRU, ACCESS
-            MOVLW   LOW(MsgLinha2)
-            MOVWF   TBLPTRL, ACCESS
-
-            CALL    LCD_PrintString
-
-MainLoop:
-            BRA     MainLoop            ; loop infinito
-
-; ---------------------------------------------------------------------
-; STRINGS EM FLASH (terminadas com 0x00)
-; colocadas depois do código inicial pra não bagunçar o vetor de reset
-; ---------------------------------------------------------------------
-            ORG     0x300
-MsgLinha1:
-            DB      "MICROS",0x00
-MsgLinha2:
-            DB      "PROF: ALAN",0x00
-
-; ---------------------------------------------------------------------
-; END OF FILE
-; ---------------------------------------------------------------------
-            END
+    // Loop infinito (equivalente ao BRA MainLoop)
+    while(1) {
+        // Nada a fazer; mantém a mensagem na tela
+        // Se quisesse piscar algo futuramente, faria aqui
+    }
+}
