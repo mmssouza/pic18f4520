@@ -1,4 +1,0 @@
-Warning[205] /home/marcelo/Documentos/Micros/MPLABXProjects/PIC18F4520/Botao_Display_inc_dec_asm.X/newpic_8b_simple.asm 62 : Found directive in column 1. (udata_acs)
-Warning[207] /home/marcelo/Documentos/Micros/MPLABXProjects/PIC18F4520/Botao_Display_inc_dec_asm.X/newpic_8b_simple.asm 63 : Found label after column 1. (CONTAGEM)
-Warning[207] /home/marcelo/Documentos/Micros/MPLABXProjects/PIC18F4520/Botao_Display_inc_dec_asm.X/newpic_8b_simple.asm 64 : Found label after column 1. (CONTA_ATRASO)
-Warning[205] /home/marcelo/Documentos/Micros/MPLABXProjects/PIC18F4520/Botao_Display_inc_dec_asm.X/newpic_8b_simple.asm 103 : Found directive in column 1. (end)
