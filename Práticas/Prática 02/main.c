@@ -1,4 +1,11 @@
 // ======================================================================
+// Universidade Federal do Ceará (Campus) Sobral
+// Prof.: Me. Alan Rocha
+// Disciplina: Microprocessadores
+// Semestre: 2025.2
+// ======================================================================
+
+// ======================================================================
 // "MICROS" na linha 1 e "PROF: ALAN" na linha 2
 // PIC18F4520 + LCD 16x2 (8 bits, barramento inteiro em PORTD)
 // RS = RB0, EN = RB1, RW = GND
