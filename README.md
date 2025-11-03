@@ -14,3 +14,7 @@
 |Cronometro_2digitos_ext_Int_C.X| Versão interrupção do cronômetro de dois dígitos com teclas para controle de pausa, iniciar e zerar contagem|
 |exemplo_adc_pwm_motor.X| Modulação PWM de saída digital para controle de velocidade de ventilador de cooler de computador. Entrada analógica determina o duty cycle.|
 |DAC_C.X | Geração de forma de onda com conversor D/A a partir de padrão armazenado na memória do microcontrolador.|
+|Exemplo_LCD_C.X|Display LCD 16x2|
+|Exemplo serial|Comunicação serial UART|
+
+
