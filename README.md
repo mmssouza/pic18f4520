@@ -1,10 +1,33 @@
-# pic18f4520: práticas de laboratório da disciplina microprocessadores
+<img src="https://github.com/mmssouza/pic18f4520/blob/main/brasao.jpg" width="450">
 
-## Universidade Federal do Ceará - Campus de Sobral
+## SBL0082 -- Microprocessadores -- 2025.2
+## Práticas de laboratório
 
-### Prof. Marcelo M. S. Souza
+#### Marcelo M. S. Souza <marcelo@ufc.br>, Alan Marques Rocha [![Linkedin](https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg)](https://linkedin.com/in/alanmarquesrocha) / [![Instagram](https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/instagram.svg)](https://instagram.com/alanmarquesrocha)
 
-<marcelo@ufc.br>
+---
+
+Neste repositório, encontram-se os roteiros das práticas, códigos e materiais de apoio.
+
+
+Ao todo serão realizadas 08 (oito) práticas:
+
+
+| Nº da Prática | Descrição | Link |
+| ---|---|---|---|---|---|---|
+|--|Apostila (roteiros)|[Link para acesso](https://github.com/mmssouza/pic18f4520/blob/main/ufc_micros_apostila_de_praticas.pdf)
+| 01 | Familiarização e E/S |[Link para acesso](https://github.com/AlanMarquesRocha/microprocessadores\_2025\_2/tree/master/Pr%C3%A1ticas/Pr%C3%A1tica%2001) |
+| 02 | Interface LCD 16x2 com PIC18F4520 em Assembly | [Link para acesso](https://github.com/AlanMarquesRocha/microprocessadores\_2025\_2/tree/master/Pr%C3%A1ticas/Pr%C3%A1tica%2002) |
+| 03 | Cronômetro com Interrupção Externa | [Link para acesso](https://github.com/AlanMarquesRocha/microprocessadores\_2025\_2/tree/master/Pr%C3%A1ticas/Pr%C3%A1tica%2003) |
+| 04 | Controle de Ventoinha | [Link para acesso](-)|
+| 05 | Incremento e Decremento | [Link para acesso](-)|
+| 06 | Voltímetro | [Link para acesso](-)|
+| 07 | DAC ou rede R-2R | [Link para acesso](-)|
+| 08 | Comunicação Serial Síncrona | [Link para acesso](-)|
+
+---
+
+### Extra-oficiais
 
 |Prática|Descrição|
 |--------|---------|
