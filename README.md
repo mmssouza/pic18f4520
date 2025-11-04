@@ -12,7 +12,6 @@ Neste repositório, encontram-se os roteiros das práticas, códigos e materiais
 
 Ao todo serão realizadas 08 (oito) práticas:
 
-
 | Nº da Prática | Descrição | Link |
 | ---|---|---|---|---|---|---|
 |--|Apostila (roteiros)|[Link para acesso](https://github.com/mmssouza/pic18f4520/blob/main/ufc_micros_apostila_de_praticas.pdf)
