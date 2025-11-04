@@ -3,7 +3,7 @@
 ## SBL0082 -- Microprocessadores -- 2025.2
 ## Práticas de laboratório
 
-#### Marcelo M. S. Souza <marcelo@ufc.br>, Alan Marques Rocha [![Linkedin](https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg)](https://linkedin.com/in/alanmarquesrocha) / [![Instagram](https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/instagram.svg)](https://instagram.com/alanmarquesrocha)
+#### Marcelo M. S. Souza <marcelo@ufc.br>, Alan Marques Rocha [[Linkedin](https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg)](https://linkedin.com/in/alanmarquesrocha) / [[Instagram](https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/instagram.svg)](https://instagram.com/alanmarquesrocha)
 
 ---
 
