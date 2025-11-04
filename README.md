@@ -13,8 +13,8 @@ Neste repositório, encontram-se os roteiros das práticas, códigos e materiais
 Ao todo serão realizadas 08 (oito) práticas:
 
 | Nº da Prática | Descrição | Link |
-| ---|---|---|---|---|---|---|
-|--|Apostila (roteiros)|[Link para acesso](https://github.com/mmssouza/pic18f4520/blob/main/ufc_micros_apostila_de_praticas.pdf)
+| ---|---|---|
+|--|Apostila (roteiros)|[Link para acesso](https://github.com/mmssouza/pic18f4520/blob/main/ufc_micros_apostila_de_praticas.pdf)|
 | 01 | Familiarização e E/S |[Link para acesso](https://github.com/AlanMarquesRocha/microprocessadores\_2025\_2/tree/master/Pr%C3%A1ticas/Pr%C3%A1tica%2001) |
 | 02 | Interface LCD 16x2 com PIC18F4520 em Assembly | [Link para acesso](https://github.com/AlanMarquesRocha/microprocessadores\_2025\_2/tree/master/Pr%C3%A1ticas/Pr%C3%A1tica%2002) |
 | 03 | Cronômetro com Interrupção Externa | [Link para acesso](https://github.com/AlanMarquesRocha/microprocessadores\_2025\_2/tree/master/Pr%C3%A1ticas/Pr%C3%A1tica%2003) |
