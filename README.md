@@ -7,7 +7,7 @@
 ---
 
 <h3 align="center"> 
-	 Universidade Federal do Ceará (campus Sobral) <br>
+	 Universidade Federal do Ceará (_campus_ Sobral) <br>
   Disciplina: (SBL0082) Microprocessadores - 2025.2
 </h3>
 
