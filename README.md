@@ -26,7 +26,8 @@ Ao todo foram realizadas 08 (oito) práticas, conforme apresentado na tabela a s
 | 03 | Cronômetro com Interrupção Externa | [Link para acesso](https://github.com/AlanMarquesRocha/microprocessadores_2025_2/tree/master/Pr%C3%A1ticas/Pr%C3%A1tica%2003)
 | 04 | Controle de Ventoinha | [Link para acesso](https://github.com/AlanMarquesRocha/microprocessadores_2025_2/tree/master/Pr%C3%A1ticas/Pr%C3%A1tica%2004)
 | 05 | DAC ou rede R-2R | [Link para acesso](https://github.com/AlanMarquesRocha/microprocessadores_2025_2/tree/master/Pr%C3%A1ticas/Pr%C3%A1tica%2005)
-| 06 | Voltímetro ADC+LCD | [Link para acesso](-)
+| 06 | Voltímetro ADC+LCD | [Link para acesso](https://github.com/AlanMarquesRocha/microprocessadores_2025_2/tree/master/Pr%C3%A1ticas/Pr%C3%A1tica%2006)
+
 | 07 | Incremento e Decremento | [Link para acesso](-)
 | 08 | Comunicação Serial Síncrona | [Link para acesso](-)
 
