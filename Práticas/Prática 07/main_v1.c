@@ -1,16 +1,16 @@
 /*---------------------------------------------------------------
- * UNIVERSIDADE FEDERAL DO CEARÁ ? UFC
- * CAMPUS DE SOBRAL ? CURSO DE ENGENHARIA ELÉTRICA E COMPUTAÇÃO
+ * UNIVERSIDADE FEDERAL DO CEARÃ ? UFC
+ * CAMPUS DE SOBRAL ? CURSO DE ENGENHARIA ELÃ‰TRICA E COMPUTAÃ‡ÃƒO
  * DISCIPLINA: SBL0082 ? Microprocessadores (2025.2)
  *
- * PRÁTICA 07 ? SEMÁFORO DIGITAL COM LCD E TEMPORIZAÇÃO
+ * PRÃTICA 07 ? SEMÃFORO DIGITAL COM LCD E TEMPORIZAÃ‡ÃƒO
  * Microcontrolador: PIC18F4520
- * Display: LCD Alfanumérico 16x2 (modo 4 bits)
+ * Display: LCD AlfanumÃ©rico 16x2 (modo 4 bits)
  * LEDs: Verde, Amarelo (Laranja) e Vermelho
  *
  * AUTOR: Prof.: Me. Alan Rocha
  * DATA: 30/11/2025
- * VERSÃO: 1.0
+ * VERSÃƒO: 1.0
  *--------------------------------------------------------------*/
 
 
@@ -27,7 +27,7 @@
 #define lcd_db6    PORTDbits.RD6
 #define lcd_db7    PORTDbits.RD7
 
-// === Prototipagem das funções ===
+// === Prototipagem das funÃ§Ãµes ===
 void lcd_init(void);
 void lcd_clear(void);
 void lcd_set_cursor(char linha, char coluna);
@@ -38,7 +38,7 @@ void lcd_write(unsigned char data);
 void envia_nibble(unsigned char nibble);
 void contador_segundos(unsigned char tempo);
 
-// === Inicialização LCD ===
+// === InicializaÃ§Ã£o LCD ===
 void envia_nibble(unsigned char nibble) {
     lcd_db4 = (nibble >> 4) & 1;
     lcd_db5 = (nibble >> 5) & 1;
@@ -106,7 +106,7 @@ void lcd_init(void) {
     lcd_clear();
 }
 
-// === Função de contagem no LCD ===
+// === FunÃ§Ã£o de contagem no LCD ===
 void contador_segundos(unsigned char tempo) {
     char buffer[16];
     for (int i = tempo; i >= 0; i--) {
@@ -117,15 +117,15 @@ void contador_segundos(unsigned char tempo) {
     }
 }
 
-// === Função principal ===
+// === FunÃ§Ã£o principal ===
 void main(void) {
-    // Inicializações
+    // InicializaÃ§Ãµes
     lcd_init();
-    TRISC = 0xF8; // RC0?RC2 como saída (LEDs)
+    TRISC = 0xF8; // RC0?RC2 como saÃ­da (LEDs)
     PORTC = 0x00;
 
     while (1) {
-        // Mensagem de início
+        // Mensagem de inÃ­cio
         lcd_clear();
         lcd_set_cursor(1, 0);
         lcd_puts("Pratica 07:");
