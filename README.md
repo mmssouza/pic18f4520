@@ -13,18 +13,17 @@ Neste repositório, encontram-se os roteiros das práticas, códigos e materiais
 Ao todo serão realizadas 08 (oito) práticas:
 
 | Nº da Prática | Descrição | Link |
-| ---|---|---|
-|--|Apostila (roteiros)|[Link para acesso](https://github.com/mmssouza/pic18f4520/blob/main/ufc_micros_apostila_de_praticas.pdf)|
-| 01 | Familiarização e E/S |[Link para acesso](https://github.com/AlanMarquesRocha/microprocessadores\_2025\_2/tree/master/Pr%C3%A1ticas/Pr%C3%A1tica%2001) |
-| 02 | Interface LCD 16x2 com PIC18F4520 em Assembly | [Link para acesso](https://github.com/AlanMarquesRocha/microprocessadores\_2025\_2/tree/master/Pr%C3%A1ticas/Pr%C3%A1tica%2002) |
-| 03 | Cronômetro com Interrupção Externa | [Link para acesso](https://github.com/AlanMarquesRocha/microprocessadores\_2025\_2/tree/master/Pr%C3%A1ticas/Pr%C3%A1tica%2003) |
-| 04 | Controle de Ventoinha | [Link para acesso](-)|
-| 05 | Incremento e Decremento | [Link para acesso](-)|
-| 06 | Voltímetro | [Link para acesso](-)|
-| 07 | DAC ou rede R-2R | [Link para acesso](-)|
-| 08 | Comunicação Serial Síncrona | [Link para acesso](-)|
+| --- | --- | --- |
+| 01 | Familiarização e E/S | [Link para acesso](https://github.com/AlanMarquesRocha/microprocessadores_2025_2/tree/master/Pr%C3%A1ticas/Pr%C3%A1tica%2001)
+| 02 | Interface LCD 16x2 com PIC18F4520 em Assembly | [Link para acesso](https://github.com/AlanMarquesRocha/microprocessadores_2025_2/tree/master/Pr%C3%A1ticas/Pr%C3%A1tica%2002)
+| 03 | Cronômetro com Interrupção Externa | [Link para acesso](https://github.com/AlanMarquesRocha/microprocessadores_2025_2/tree/master/Pr%C3%A1ticas/Pr%C3%A1tica%2003)
+| 04 | Controle de Ventoinha | [Link para acesso](https://github.com/AlanMarquesRocha/microprocessadores_2025_2/tree/master/Pr%C3%A1ticas/Pr%C3%A1tica%2004)
+| 05 | DAC ou rede R-2R | [Link para acesso](https://github.com/AlanMarquesRocha/microprocessadores_2025_2/tree/master/Pr%C3%A1ticas/Pr%C3%A1tica%2005)
+| 06 | Voltímetro ADC+LCD | [Link para acesso](https://github.com/AlanMarquesRocha/microprocessadores_2025_2/tree/master/Pr%C3%A1ticas/Pr%C3%A1tica%2006)
+| 07 | Semáforo Digital com LCD e Temporização | [Link para acesso](https://github.com/AlanMarquesRocha/microprocessadores_2025_2/tree/master/Pr%C3%A1ticas/Pr%C3%A1tica%2007)
+| 08 | Comunicação Serial Síncrona | [Link para acesso](-)
+| 09 | Incremento e Decremento | [Link para acesso](-)
 
----
 
 ### Extra-oficiais
 
@@ -38,5 +37,3 @@ Ao todo serão realizadas 08 (oito) práticas:
 |DAC_C.X | Geração de forma de onda com conversor D/A a partir de padrão armazenado na memória do microcontrolador.|
 |Exemplo_LCD_C.X|Display LCD 16x2|
 |Exemplo serial|Comunicação serial UART|
-
-
